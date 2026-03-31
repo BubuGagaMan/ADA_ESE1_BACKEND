@@ -209,7 +209,7 @@ export const refreshUserToken = async (req: FastifyRequest, reply: FastifyReply)
                 maxAge: 60 * 60 * 24 * 7, // 7 days
             })
 
-            reply.status(status).send({ message, data: { accessToken: data.accessToken } })
+            reply.status(status).send({ message, data: { accessToken: data.accessToken, redepoyed: true } })
             return
         }
 
