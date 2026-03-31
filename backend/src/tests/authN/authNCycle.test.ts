@@ -4,8 +4,6 @@ import { buildApp } from '@src/app.js'
 
 import { equal } from 'node:assert/strict'
 
-import { execSync } from 'child_process'
-
 import { usersArr } from '@db/fixturesAndSeeds/user/user.fixtures.js'
 import isPasswordCorrect from '@tests/functions/isPasswordCorrect.js'
 import registerNewUser from '@tests/functions/registerNewUser.js'
@@ -14,8 +12,7 @@ import { EmailConfirmationEnum } from '@services/auth/emailConfirmation/emailCon
 import { User } from '@db/entities/user/User.entity.js'
 import { generateRandom6CharCode } from '@services/utils/random6CharCode.js'
 import bcryptHash from '@utilities/bcryptHash.js'
-
-execSync(`npm run db:seed`, { stdio: 'inherit' })
+import testSeedDB from '@tests/testSeedDB.js'
 
 // import bcrypt from "bcrypt";
 
@@ -25,6 +22,7 @@ test('auth cycle test', async (t: TestContext) => {
     t.after(async () => {
         await app.close()
     })
+    await testSeedDB(app)
 
     const redis = app.redis
     await redis.flushdb()
@@ -154,7 +152,7 @@ test('auth cycle test', async (t: TestContext) => {
         const newCode = generateRandom6CharCode()
         await app.redis.set(
             `confirmation:password_reset:${newCode}`,
-            JSON.stringify({ password: await bcryptHash(newPassword, 11) }),
+            JSON.stringify({ password: await bcryptHash(newPassword, 1) }),
         )
 
         await app.inject({
