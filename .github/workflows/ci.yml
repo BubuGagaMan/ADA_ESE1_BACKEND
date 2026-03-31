@@ -1,0 +1,58 @@
+name: CI Test Pipeline
+
+on:
+    push:
+        branches: ['**']
+    pull_request:
+        branches: ['**']
+
+defaults:
+    run:
+        working-directory: ./backend
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+
+        env:
+            DATABASE_URL: postgresql://user1:12345@localhost:5432/db1
+            REDIS_HOST: localhost
+            REDIS_PORT: 6379
+            REDIS_PASSWORD: 12345
+
+            TS_NODE_PROJECT: ./tsconfig.json
+            NODE_ENV: test
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '20'
+                  cache: 'npm'
+
+                  cache-dependency-path: ./backend/package-lock.json
+
+            - name: Start Databases (Postgres & Redis)
+
+              run: |
+                  docker compose up -d db redis
+                  sleep 10
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build Application
+              run: npm run build
+
+            - name: Run migrations
+              run: npm run migration:run
+
+            - name: Run Tests
+              run: npm run test
+
+            - name: Shutdown Services
+              if: always()
+              run: docker compose down
