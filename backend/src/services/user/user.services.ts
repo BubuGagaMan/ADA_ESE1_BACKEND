@@ -174,7 +174,8 @@ export class UserServices {
 
             const user = await findOneEntityBy(this.db.manager, User, JSON.parse(redisValue), 'User')
 
-            user.password = await bcrypt.hash(password, Number(process.env.PASSWORD_SALT_ROUNDS) || 11)
+            // MAKE SURE THERE IS A SALT ROUND ENV!!! 1 is the default for testing speeds
+            user.password = await bcrypt.hash(password, Number(process.env.PASSWORD_SALT_ROUNDS) || 1)
 
             await this.db.manager.save(User, user)
 

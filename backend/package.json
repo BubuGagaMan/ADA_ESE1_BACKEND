@@ -4,7 +4,6 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "build": "npx tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
         "start": "node ./dist/index.js",
         "start-no-pretty": "node ./dist/index.js | less",
@@ -17,7 +16,8 @@
         "db:seed:roles": "node ./dist/db/fixtures/roles.db.seed.js",
         "db:seed2.0": "npm run db:seed:foods && npm run db:seed:roles",
         "build-and-seed": "npm run build && npm run db:seed2.0",
-        "run:files": "node ./run-files.js"
+        "run:files": "node ./run-files.js",
+        "test": "node -r tsconfig-paths/register ./run-files.js ./dist/tests/ .test.js"
     },
     "keywords": [],
     "author": "",
@@ -51,6 +51,7 @@
         "@types/pino": "^7.0.4",
         "ts-node": "^10.9.2",
         "tsc-alias": "^1.8.16",
+        "tsconfig-paths": "^4.2.0",
         "typescript": "^5.8.3"
     }
 }

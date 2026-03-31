@@ -195,7 +195,8 @@ export class AuthServices {
             const userDetails = JSON.stringify({
                 email: email,
                 username: username,
-                password: await bcrypt.hash(password, Number(process.env.PASSWORD_SALT_ROUNDS) || 11),
+                // MAKE SURE THERE IS A SALT ROUND ENV!!! 1 is the default for testing speeds
+                password: await bcrypt.hash(password, Number(process.env.PASSWORD_SALT_ROUNDS) || 1),
             })
 
             const { redisKey, confirmationCode } = await cacheConfirmation(
@@ -239,7 +240,8 @@ export class AuthServices {
             } else if (userDetails.password && !userDetails.email && !userDetails.username) {
                 userDetails.password = await bcrypt.hash(
                     userDetails.password,
-                    Number(process.env.PASSWORD_SALT_ROUNDS) || 11,
+                    // MAKE SURE THERE IS A SALT ROUND ENV!!! 1 is the default for testing speeds
+                    Number(process.env.PASSWORD_SALT_ROUNDS) || 1,
                 )
             } else {
                 return {

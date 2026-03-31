@@ -14,6 +14,15 @@ jobs:
     test:
         runs-on: ubuntu-latest
 
+        env:
+            DATABASE_URL: postgresql://user1:12345@localhost:5432/db1
+            REDIS_HOST: localhost
+            REDIS_PORT: 6379
+            REDIS_PASSWORD: 12345
+
+            TS_NODE_PROJECT: ./tsconfig.json
+            NODE_ENV: test
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
@@ -23,12 +32,11 @@ jobs:
               with:
                   node-version: '20'
                   cache: 'npm'
-                  # Pointing to your lock file inside /backend
+
                   cache-dependency-path: ./backend/package-lock.json
 
             - name: Start Databases (Postgres & Redis)
-              # Updated to 'docker compose' (no hyphen)
-              # Added sleep to prevent "Connection Refused" errors
+
               run: |
                   docker compose up -d db redis
                   sleep 10
@@ -39,14 +47,11 @@ jobs:
             - name: Build Application
               run: npm run build
 
-            - name: Run Tests
+            - name: Run migrations
+              run: npm run migration:run
 
-              run: npm run run:files ./dist/tests/ .test.js
-              env:
-                  DATABASE_URL: postgresql://user1:12345@localhost:5432/db1
-                  REDIS_HOST: localhost
-                  REDIS_PORT: 6379
-                  REDIS_PASSWORD: 12345
+            - name: Run Tests
+              run: npm run test
 
             - name: Shutdown Services
               if: always()
