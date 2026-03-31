@@ -40,26 +40,16 @@ async function runFilesSequentially() {
     }
 
     for (const file of files) {
-        console.log(chalk.blue(`\n Running ${file}...`))
+        console.log(chalk.blue(`Running ${file}...`))
         try {
-            // Use 'inherit' for stdio to stream logs directly to GitHub Actions
-            // This prevents the buffer from hanging
-            const { stdout, stderr } = await execAsync(`node "${file}"`, {
-                env: { ...process.env, NODE_ENV: 'test' },
-            })
-
-            console.log(stdout)
+            const { stdout, stderr } = await execAsync(`node "${file}"`)
+            if (stdout) console.log(chalk.green(stdout))
             if (stderr) console.error(chalk.red(stderr))
         } catch (err) {
-            console.error(chalk.red(` Error in ${file}:`))
-            console.error(err.stdout) // Print what happened before crash
-            console.error(err.stderr)
-            process.exit(1)
+            console.error(chalk.red(`Error running ${file}: ${err.message}`))
+            process.exit(1) // Stop on first failure
         }
     }
-    // Explicitly exit once all files are done
-    console.log(chalk.green('\n All tests completed.'))
-    process.exit(0)
 }
 
 runFilesSequentially()
