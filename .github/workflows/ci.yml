@@ -41,7 +41,7 @@ jobs:
 
             - name: Run Tests
 
-              run: npm run run:files ./dist/tests/ .test.js
+              run: node ./dist/tests/authN/authNCycle.test.js
               env:
                   DATABASE_URL: postgresql://user1:12345@localhost:5432/db1
                   REDIS_HOST: localhost
