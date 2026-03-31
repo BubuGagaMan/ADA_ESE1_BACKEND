@@ -42,7 +42,8 @@ async function runFilesSequentially() {
     for (const file of files) {
         console.log(chalk.blue(`Running ${file}...`))
         try {
-            const { stdout, stderr } = await execAsync(`node "${file}"`)
+            // add the register flag here so EVERY sub-test knows how to find @src
+            const { stdout, stderr } = await execAsync(`node -r tsconfig-paths/register "${file}"`)
             if (stdout) console.log(chalk.green(stdout))
             if (stderr) console.error(chalk.red(stderr))
         } catch (err) {
