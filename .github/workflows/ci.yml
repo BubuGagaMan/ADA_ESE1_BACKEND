@@ -21,6 +21,7 @@ jobs:
             REDIS_PASSWORD: 12345
 
             TS_NODE_PROJECT: ./tsconfig.json
+            NODE_ENV: test
 
         steps:
             - name: Checkout code
