@@ -10,7 +10,7 @@ export type ResendEmailParams = {
 }
 
 const emailPlugin: FastifyPluginAsync = async (fastify: FastifyInstance) => {
-    const resend = new Resend(process.env.RESEND_API_KEY)
+    const resend = new Resend(process.env.RESEND_API_KEY || 'noKey')
 
     fastify.decorate('sendEmail', async ({ from, to, subject, html }: ResendEmailParams) => {
         try {
