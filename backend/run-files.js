@@ -48,6 +48,9 @@ async function runFilesSequentially() {
             if (stderr) console.error(chalk.red(stderr))
         } catch (err) {
             console.error(chalk.red(`Error running ${file}: ${err.message}`))
+
+            if (err.stdout) console.log(chalk.yellow(`STDOUT log:\n${err.stdout}`))
+            if (err.stderr) console.error(chalk.red(`STDERR trace:\n${err.stderr}`))
             process.exit(1) // Stop on first failure
         }
     }
