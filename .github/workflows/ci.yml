@@ -43,7 +43,7 @@ jobs:
               run: npm run migration:run
 
             - name: Run Tests
-              run: npm run run:files ./dist/tests/ .test.js
+              run: npm run test
               env:
                   DATABASE_URL: postgresql://user1:12345@localhost:5432/db1
                   REDIS_HOST: localhost
