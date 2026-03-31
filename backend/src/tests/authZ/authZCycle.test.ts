@@ -4,13 +4,9 @@ import { buildApp } from '@src/app.js'
 
 import { equal } from 'node:assert/strict'
 
-import { execSync } from 'child_process'
-
 import { usersArr } from '@db/fixturesAndSeeds/user/user.fixtures.js'
 import userLogin from '@tests/functions/userLogin.js'
 import testSeedDB from '@tests/testSeedDB.js'
-
-execSync(`npm run db:seed`, { stdio: 'inherit' })
 
 // import bcrypt from "bcrypt";
 
