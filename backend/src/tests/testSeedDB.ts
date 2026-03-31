@@ -1,5 +1,4 @@
 // seed db file while accepts the app as a parameter - for lighter load during tests instead of a production seeding
-import AppDataSource from '@db/data-source.js'
 import { seedFoods } from '@db/fixturesAndSeeds/food/food.db.seed.js'
 import { seedUsers } from '@db/fixturesAndSeeds/user/user.db.seed.js'
 import { seedDiets } from '@db/fixturesAndSeeds/diet/diet.db.seed.js'
@@ -11,7 +10,7 @@ import { FastifyInstance } from 'fastify'
 async function testSeedDB(app: FastifyInstance) {
     console.info('Clearing Database:')
 
-    const queryRunner = AppDataSource.createQueryRunner()
+    const queryRunner = app.db.createQueryRunner()
 
     await queryRunner.connect()
 
@@ -53,7 +52,7 @@ async function testSeedDB(app: FastifyInstance) {
     await seedMeals(queryRunner)
 
     await queryRunner.release()
-    await app.close()
+    // await app.close()
 }
 
 // await seedDB()
