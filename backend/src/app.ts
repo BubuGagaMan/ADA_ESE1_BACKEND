@@ -31,7 +31,10 @@ export async function buildApp(opts = {}) {
     const app = fastify(opts)
     app.setErrorHandler(customErrorHandler)
     await app.register(cors, {
-        origin: process.env.FRONT_END_URL || 'http://localhost:5173',
+        origin: [
+            process.env.FRONT_END_URL || 'http://localhost:5173',
+            process.env.WWW_FRONT_END_URL || 'http://localhost:8080',
+        ],
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
         allowedHeaders: ['Content-Type', 'access-token'],
         credentials: true,
