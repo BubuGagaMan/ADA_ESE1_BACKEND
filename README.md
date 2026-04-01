@@ -1,4 +1,5 @@
 # Diet Tracker Backend
+
 A Node-Fastify server designed to help users track their diets, manage meals, and monitor their daily macronutrient and caloric goals.
 
 ## Functional features (repeating from front end)
@@ -47,7 +48,7 @@ ci.yml file providing setup of the environments and test running scripts - consu
 
 docker-compose.yml file used to easily set up required services, such as postgres and redis
 
-### Continuous deployment 
+### Continuous deployment
 
 Repository paired with deployment server via a GithubApp
 
@@ -94,7 +95,7 @@ Testing suite paired with CI config to deliver testing on each pull request!
 Encapsulate the business logic at the lowest level - utilise helpers to eliminate repetition and return objects back to controllers, such as:
 { data, status, message }
 
-### Controllers 
+### Controllers
 
 Prepare data payloads from requests and consume services with the given payload.
 Receive results from Services' computations and prepare replies back to clients.
@@ -105,5 +106,4 @@ Often times utilise helper functions for immediate reply/response generation
 Consume the controller classes / functions to mapped routes
 Utilise schemas for validating requests
 
-
-
+CI - CD SHOWCASE
