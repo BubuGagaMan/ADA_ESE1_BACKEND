@@ -1,10 +1,15 @@
 name: CI Test Pipeline
 
 on:
-    push:
-        branches: ['**']
     pull_request:
         branches: ['**']
+
+    push:
+        branches: [main, dev]
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 defaults:
     run:
