@@ -107,3 +107,11 @@ Consume the controller classes / functions to mapped routes
 Utilise schemas for validating requests
 
 CI - CD SHOWCASE
+
+
+## Deployment 
+
+Deployment via a hetzner VPS
+HTTPS ONLY - cookies and CORS setups ensuring this in order to disable CSRF attacks
+Firewall for network protection
+GithubApp used for CD
