@@ -113,8 +113,6 @@ HTTPS ONLY - cookies and CORS setups ensuring this in order to disable CSRF atta
 Firewall for network protection
 GithubApp used for CD
 
-CI - CD SHOWCASE
-
 ## Setup
 
 1 - clone the repo via guthub
@@ -177,5 +175,17 @@ npm run test
 ```
 Note that you will need ot reseed the database after running the tests
 
+## Structure
+/src/:
+/services - contians the bottom-most business logic layer
+/controllers - contians the request/reply control layer, consuming the services
+/routes - contains the route orgnisation later as well as the input validation schemas
+/plugins - contains fastify and custom built plugins integrated with the fastify instance
+/db - contians datasource config, database models, seeds, db scripts such as migrations
+/middleware - contains logic used before requests
+/tests - contains automated test suite
+/lib - mainly holds the request error handling logic
+/utils - utilities used accross the app
 
+CI - CD SHOWCASE
 
