@@ -106,12 +106,76 @@ Often times utilise helper functions for immediate reply/response generation
 Consume the controller classes / functions to mapped routes
 Utilise schemas for validating requests
 
-CI - CD SHOWCASE
-
-
 ## Deployment 
 
 Deployment via a hetzner VPS
 HTTPS ONLY - cookies and CORS setups ensuring this in order to disable CSRF attacks
 Firewall for network protection
 GithubApp used for CD
+
+CI - CD SHOWCASE
+
+## Setup
+
+1 - clone the repo via guthub
+```
+git clone https://github.com/BubuGagaMan/ADA_ESE1_BACKEND 
+```
+
+2 - enter the backend directory and install node package dependencies
+```
+cd /backend
+npm install
+```
+
+3 - set up env variables as desired and sync them up with the same values in the docker-compose.yml
+
+i.e. if your postgres env file has the db values of:
+```
+DB_PORT=5432
+DB_USERNAME=user1
+DB_PASSWORD=12345
+DB_NAME=db1
+```
+your docker-compose file will need to conform with it:
+```
+        environment:
+            POSTGRES_USER: user1
+            POSTGRES_PASSWORD: 12345
+            POSTGRES_DB: db1
+        ports:
+            - '5432:5432'
+```
+This is also true for the rest of its values - e.g. redis values
+
+4 - run the docker compose file (docker required - see setup here: https://docs.docker.com/engine/install/)
+(might need sudo permissions if not setup up additionally)
+```
+docker compose up -d
+```
+
+5 - build the application (must be in /backend directory still
+```
+npm run build 
+```
+
+6 - run the migrations:
+```
+npm run migration:run
+```
+
+7 - seed the database:
+```
+npm run db:seed
+```
+
+This will fully setup the back end app
+
+You can optionally run the tests via 
+```
+npm run test
+```
+Note that you will need ot reseed the database after running the tests
+
+
+
