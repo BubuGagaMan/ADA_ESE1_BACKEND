@@ -176,6 +176,7 @@ npm run test
 Note that you will need ot reseed the database after running the tests
 
 ## Structure
+```
 /src/:
 /services - contians the bottom-most business logic layer
 /controllers - contians the request/reply control layer, consuming the services
@@ -186,6 +187,7 @@ Note that you will need ot reseed the database after running the tests
 /tests - contains automated test suite
 /lib - mainly holds the request error handling logic
 /utils - utilities used accross the app
+```
 
 CI - CD SHOWCASE
 
