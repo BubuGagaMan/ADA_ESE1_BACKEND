@@ -18,7 +18,7 @@ export const registrationSchema = {
                 type: 'string',
                 minLength: 8,
                 // regex: 1 upper, 1 lower, 1 digit, 1 special char
-                pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$',
+                pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$',
             },
         },
     },
